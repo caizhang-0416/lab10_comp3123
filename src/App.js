@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser, logoutUser } from './actions';
 
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const [username, setUsername] = useState('');
+
+  const handleLogin = () => {
+    // Simulate a successful login with JWT
+    const fakeJWT = 'fake-jwt-token'; // Replace with actual JWT logic
+    localStorage.setItem('jwt', fakeJWT);
+    dispatch(setUser({ name: username }));
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
+    dispatch(logoutUser());
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+        <h1>React Redux with JWT</h1>
+        {user ? (
+            <div>
+              <p>Welcome, {user.name}</p>
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+        ) : (
+            <div>
+              <input
+                  type="text"
+                  placeholder="Enter username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+              />
+              <button onClick={handleLogin}>Login</button>
+            </div>
+        )}
+      </div>
   );
 }
 
