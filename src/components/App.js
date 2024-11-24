@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser, logoutUser } from './actions';
+import { setUser, logoutUser } from '../actions/actions';
 
 function App() {
   const dispatch = useDispatch();
